@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import math
 """
 Created on Thu Nov  7 19:22:39 2019
 
@@ -57,20 +58,35 @@ def parseArray(read):
 # integer. The function also modifies the values in tArray[].
 #
 def assignTrust(array = [[]]): #Assign a trust value to the text
+
+    if(len(array) == 1):
+        if (array[0][0] == 0 and array[0][1] == 0 and array[0][2] == 0):
+            return 100
+
+    
     currentTrust = 100
     t = 0
+    #tt = 0
     for row in array:
         if (row[0] == 0):
-            t += (0.2) * row[3]
-            tArray.append((0.2) * row[3])
-        elif (row[0] == 1):
-            t += (0.1) * row[3]
-            tArray.append((0.1) * row[3])
+            t += (0.0001) * row[3]
+            tArray.append((0.0001) * row[3])
+        elif (row[0] == 1): #insert
+            if(row[3] < 2):
+                t += (0.3) * row[3]
+                tArray.append((0.3) * row[3])
+            else:
+                t += math.log(2, row[3])
+                tArray.append(math.log(2, row[3]))
+
         elif (row[0] == 2):
             tArray.append(0)
         else:
             print ("INVALID ENTRY")
+
+        #tt += 5 * row[3]
     currentTrust -= t
+
     return currentTrust
 
 
@@ -83,13 +99,13 @@ def assignTrust(array = [[]]): #Assign a trust value to the text
 # The function should write OK if values match.
 #
 def checkVal (val, myArr = []): #Test to see if values match
-    check = 0;
-    for j in range (len(myArr)):
+    check = 0
+    for j in range (0, len(myArr)):
         check += myArr[j]
     if ((100 - check) == val):
         print ("OK")
     else:
-        print ("Something went wrong...")
+        print ("Something went wrong... value is: " + str(100-check))
 
 
 #################################################################

@@ -17,17 +17,17 @@ class WikiEngine:
         A list of revisions text.
         '''
 
-        revid_list = self.get_revision_ids(page)
+        revid_list = self.get_revision_ids(page, 2)
         revisions = [self.get_revision_text(revid) for revid in revid_list]
 
         return revisions
     
-    def get_revision_ids(self, page):
+    def get_revision_ids(self, page, limit):
         PARAMS = {
             "action": "query",
             "titles": [page],
             "prop": "revisions",
-            "rvlimit": 2,
+            "rvlimit": limit,
             #"rvprop": "content",
             #"rvslots":"main",
             "format": "json"
