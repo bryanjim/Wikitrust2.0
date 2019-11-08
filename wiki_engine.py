@@ -2,52 +2,55 @@ import requests
 import pprint
 from bs4 import BeautifulSoup
 import difflib
+import re
 
-def get_revision_ids(page):
-    PARAMS = {
-        "action": "query",
-        "titles": [page],
-        "prop": "revisions",
-        "rvlimit": 2,
-        #"rvprop": "content",
-        #"rvslots":"main",
-        "format": "json"
-    }
+class wikiObj:
+
     url = "https://en.wikipedia.org/w/api.php"
-    request = requests.get(url=url, params=PARAMS)
-    data = request.json()
-    revision_list = []
-    pageid = list(data["query"]["pages"].keys())[0]
-    for x in data["query"]["pages"][pageid]["revisions"]:
-        revision_list.append(x["revid"])
-    return revision_list
+    
+    def diff_revisions(self, page):
+        '''
+        Args:
+        page: this is the title of the page to get diff revisions.
 
-def get_revision_text(revision_id):
-    PARAMS = {
-        "action": "parse",
-        "oldid": revision_id,
-        "format": "json"
-    }
-    url = "https://en.wikipedia.org/w/api.php"
-    r = requests.get(url=url, params=PARAMS)
-    data = r.json()
-    soup = BeautifulSoup(data["parse"]["text"]["*"], 'lxml')
-    paragraphs = soup.find_all('p')
-    revision_string = ""
-    for p in paragraphs:
-        revision_string += p.text
-    return revision_string
+        Returns:
+        A list of revisions text.
+        '''
 
-def diff_revisions(page):
-    '''
-    Args:
-    page: this is the title of the page to get diff revisions.
+        revid_list = self.get_revision_ids(page)
+        revisions = [self.get_revision_text(revid) for revid in revid_list]
 
-    Returns:
-    A list of revisions text.
-    '''
+        return revisions
+    
+    def get_revision_ids(self, page):
+        PARAMS = {
+            "action": "query",
+            "titles": [page],
+            "prop": "revisions",
+            "rvlimit": 2,
+            #"rvprop": "content",
+            #"rvslots":"main",
+            "format": "json"
+        }
+        request = requests.get(url=self.url, params=PARAMS)
+        data = request.json()
+        revision_list = []
+        pageid = list(data["query"]["pages"].keys())[0]
+        for x in data["query"]["pages"][pageid]["revisions"]:
+            revision_list.append(x["revid"])
+        return revision_list
 
-    revid_list = get_revision_ids(page)
-    revisions = [get_revision_text(revid) for revid in revid_list]
-
-    return revisions
+    def get_revision_text(self,revision_id):
+        PARAMS = {
+            "action": "parse",
+            "oldid": revision_id,
+            "format": "json"
+        }
+        r = requests.get(url=self.url, params=PARAMS)
+        data = r.json()
+        soup = BeautifulSoup(data["parse"]["text"]["*"], 'lxml')
+        paragraphs = soup.find_all('p')
+        revision_string = ""
+        for p in paragraphs:
+            revision_string += p.text
+        return revision_string
