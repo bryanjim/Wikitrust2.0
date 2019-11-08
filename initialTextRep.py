@@ -61,11 +61,11 @@ def assignTrust(array = [[]]): #Assign a trust value to the text
     t = 0
     for row in array:
         if (row[0] == 0):
-            t += row[3]
-            tArray.append(row[3])
+            t += (0.2) * row[3]
+            tArray.append((0.2) * row[3])
         elif (row[0] == 1):
-            t += (0.5) * row[3]
-            tArray.append((0.5) * row[3])
+            t += (0.1) * row[3]
+            tArray.append((0.1) * row[3])
         elif (row[0] == 2):
             tArray.append(0)
         else:
@@ -117,7 +117,7 @@ def isNotInt(i):
 # Main
 #   
 if __name__ == '__main__':
-    f = open("diff.txt") #open file to read the edit list
+    f = open("diff1.txt") #open file to read the edit list
     read = f.readline() #read the edit list from the file
     f.close() #close the file
     arr = parseArray(read) #Convert the string values into an array
