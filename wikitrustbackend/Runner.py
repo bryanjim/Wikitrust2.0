@@ -8,7 +8,7 @@ w = WikiEngine()
 # Get revs for title
 
 # rev_list = w.get_revision_ids("HIV", 100) # ~99.4
-rev_list = w.get_revision_ids("Stomach", 100) # ~97.4 [0:1]
+rev_list = w.get_revision_ids("Stomach", 100)  # ~97.4 [0:1]
 # rev_list = w.get_revision_ids("HIV", 100) # no change
 # rev_list = w.get_revision_ids("Apple", 100) # no change
 
@@ -31,11 +31,7 @@ print "rep: " + str(rep)
 
 # Store data in db
 id = str(rev_list[0]) + str(rev_list[99])
-data = {
-    u'diff_moves': str(diff),
-    u'diff_trust': [1,2,3,4],
-    u'trust': rep
-}
+data = {u"diff_moves": str(diff), u"diff_trust": [1, 2, 3, 4], u"trust": rep}
 
 f.writeDiff(id, data)
 
