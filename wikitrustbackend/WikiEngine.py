@@ -41,13 +41,18 @@ class WikiEngine:
             revision_list.append(x["revid"])
         return revision_list
 
-    def get_revision_text(self, revision_id):
-        PARAMS = {"action": "parse", "oldid": revision_id, "format": "json"}
+    def get_revision_text(self,revision_id):
+        PARAMS = {
+            "action": "parse",
+            "oldid": revision_id,
+            "format": "json"
+        }
         r = requests.get(url=self.url, params=PARAMS)
         data = r.json()
-        soup = BeautifulSoup(data["parse"]["text"]["*"], "lxml")
-        paragraphs = soup.find_all("p")
+        soup = BeautifulSoup(data["parse"]["text"]["*"], 'lxml')
+        paragraphs = soup.find_all('p')
         revision_string = ""
         for p in paragraphs:
-            revision_string += p.text
+            if '.mw-parser-output' not in p.text:
+                revision_string += p.text
         return revision_string
