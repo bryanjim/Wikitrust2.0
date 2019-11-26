@@ -6,7 +6,7 @@ f = Firestore()
 w = WikiEngine()
 
 def start():
-    articlesToComb = ["HIV", "Stomach", "Apple", "WikiTrust"]
+    articlesToComb = ["HIV", "Stomach", "Apple", "WikiTrust", "Google"]
     for article in articlesToComb:
         do(article, 0, 1)
 
