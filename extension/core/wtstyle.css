@@ -1,0 +1,14 @@
+.popup-wrapper{
+    width: 250px;
+    height: 250px;
+}
+
+.body{
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    font-size: 75%;
+}
+
+.popup-wrapper{
+    padding: 5px;
+}
