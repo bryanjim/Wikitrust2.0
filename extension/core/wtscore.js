@@ -1,30 +1,51 @@
-function colorPercentage(percentage){
+function colorPercentage(percentage) {
     let r, g, b = 0;
-    if (percentage < 50){
-        r = 255;
+    if (percentage < 50) {
+        r = 225;
         g = Math.round(5.1 * percentage);
-    }else{
-        g = 255;
+    } else {
+        g = 225;
         r = Math.round(510 - 5.1 * percentage);
     }
     // converts rgb to hex
-    let hex = r * 0x10000 + g * 0x100 + b *0x1;
+    let hex = r * 0x10000 + g * 0x100 + b * 0x1;
     return '#' + ('000000' + hex.toString(16)).slice(-6);
 }
 
-function getTrustScore(){
+function getTrustScore() {
     let trust = Math.floor(Math.random() * 100) + 1;
+    // This is just to test the background/border color using JS
     return trust;
 }
 
-window.onload = function(){
-    score = this.getTrustScore();
-    color = this.colorPercentage(score);
-    let gradient = this.document.getElementById('gradient')
 
-    gradient.style.backgroundColor = color
-    gradient.style.background = 'linear-gradient' + '(to right,' + color + ', #fef9ee)';
-    this.document.getElementById('trust-score').innerHTML = this.score;
-    this.document.getElementById('author-score').innerHTML = this.getTrustScore();
+$(function () {
+    let value = getTrustScore();
+    var trustColor = colorPercentage(value);
 
-}
+    $(".progress").each(function () {
+        $(this).find('#trust-value').append(value);
+        var left = $(this).find('.progress-left .progress-bar');
+        var right = $(this).find('.progress-right .progress-bar');
+        left.css("border-color", trustColor);
+        right.css("border-color", trustColor);
+
+
+        if (value > 0) {
+            if (value <= 50) {
+                right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
+            } else {
+                right.css('transform', 'rotate(180deg)')
+                left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
+            }
+        }
+
+    })
+
+    function percentageToDegrees(percentage) {
+
+        return percentage / 100 * 360
+
+    }
+
+});
