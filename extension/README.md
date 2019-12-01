@@ -4,7 +4,7 @@
 
 #### This Extension Consists of:
 
-- A content script [core/WikiTrust.js](core/WikiTrust.js) that get injected on wikipedia domains:
+- A content script [core/wtscore.js](core/WikiTrust.js) that get injected on wikipedia domains:
 
   This injects a button into the html of the Wikipedia page which, when pressed, adds the UI frame and runs the highlighting functionality.
 
@@ -29,7 +29,7 @@
 - As a Bookmarklet:
 
   **To test what the up-to-date Bookmarklet would do:** </br>
-  copy-and-paste the contents of [core/WikiTrust.js](core/WikiTrust.js) into your browser's web debug console.
+  copy-and-paste the contents of [core/wtscore.js](core/wtscore.js) into your browser's web debug console.
 
   _Note: This relies on the js being hosted online, so this will load an old version as a demo:_
 
