@@ -1,24 +1,19 @@
-<<<<<<< HEAD
 const ENDPOINT_URL = 'https://firestore.googleapis.com/v1/projects/wikitrustapp/databases/(default)/documents/articles/'
 
 let colorPercentage = (percentage) => {
-=======
-function colorPercentage(percentage) {
->>>>>>> 0d8363e6d43040b8404e6c6964255992a19764c6
     let r, g, b = 0;
-    if (percentage < 50) {
-        r = 225;
+    if (percentage < 50){
+        r = 255;
         g = Math.round(5.1 * percentage);
-    } else {
-        g = 225;
+    }else{
+        g = 255;
         r = Math.round(510 - 5.1 * percentage);
     }
     // converts rgb to hex
-    let hex = r * 0x10000 + g * 0x100 + b * 0x1;
+    let hex = r * 0x10000 + g * 0x100 + b *0x1;
     return '#' + ('000000' + hex.toString(16)).slice(-6);
 }
 
-<<<<<<< HEAD
 // Entry point of app
 window.onload = function(){
     loadDummyScores();
@@ -71,42 +66,3 @@ let dataPromise = (page) => {
         .then(res => resolve(res));
     })
 }
-=======
-function getTrustScore() {
-    let trust = Math.floor(Math.random() * 100) + 1;
-    // This is just to test the background/border color using JS
-    return trust;
-}
-
-
-$(function () {
-    let value = getTrustScore();
-    var trustColor = colorPercentage(value);
-
-    $(".progress").each(function () {
-        $(this).find('#trust-value').append(value);
-        var left = $(this).find('.progress-left .progress-bar');
-        var right = $(this).find('.progress-right .progress-bar');
-        left.css("border-color", trustColor);
-        right.css("border-color", trustColor);
-
-
-        if (value > 0) {
-            if (value <= 50) {
-                right.css('transform', 'rotate(' + percentageToDegrees(value) + 'deg)')
-            } else {
-                right.css('transform', 'rotate(180deg)')
-                left.css('transform', 'rotate(' + percentageToDegrees(value - 50) + 'deg)')
-            }
-        }
-
-    })
-
-    function percentageToDegrees(percentage) {
-
-        return percentage / 100 * 360
-
-    }
-
-});
->>>>>>> 0d8363e6d43040b8404e6c6964255992a19764c6

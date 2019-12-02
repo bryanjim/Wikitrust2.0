@@ -1,37 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="utf-8">
-	<title>HTML5 boilerplate – all you really need…</title>
-	<link rel="stylesheet" href="core/wtstyle.css">
-	<!--[if IE]>
+    <meta charset="utf-8">
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="wtstyle.css">
+    <!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <style>
-        body{
-            width: 150px;
-            height: 150px;
-        }
-        #gradient{
-            width: 150px;
-            height: 150px;
-        }
-
-    </style>
-        <script src="require.js"></script>
-    <script src = 'wtscore.js'></script>
 </head>
 
-<body class = "popup-wrapper">
+<body>
 
-	<div id = 'gradient'>
-        <div>
-            <!-- This comes from the back-end-->
-            <p>Trust level : <span id ='trust-score'></span></p>
-            <p>Author Trust: <span id ='author-score'></span></p>
-            <p>Res: <span id ='debug'></span></p>
-        </div>
-    </div>
+    <div class="col-xl-3 col-lg-6 mb-4">
+        <div class="bg-white rounded-lg p-5">
+            <h2 class="h6 font-weight-bold text-center mb-4">WikiTrust Score</h2>
+
+            <!-- Progress bar 1 -->
+            <div class="progress mx-auto">
+                <span class="progress-left">
+                    <span class="progress-bar trust-color"></span>
+                </span>
+                <span class="progress-right">
+                    <span class="progress-bar trust-color"></span>
+                </span>
+                <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
+                    <div class="h2 font-weight-bold"><span id="trust-value"></span><sup class="small">%</sup></div>
+                </div>
+            </div>
+            <!-- END -->
+
+
+            <script src="js/jquery.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <script src='wtscore.js'></script>
+
 
 </body>
+
 </html>
