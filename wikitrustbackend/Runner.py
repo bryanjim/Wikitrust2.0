@@ -1,45 +1,54 @@
 from Firestore import Firestore
 from WikiEngine import WikiEngine
-import DiffEngine, ReputationEngine
+import ReputationEngine as re
+import random as r
+
+TRUST_REVISION_COUNT = 75
 
 f = Firestore()
 w = WikiEngine()
 
 def start():
-    articlesToComb = ["HIV", "Stomach", "Apple", "WikiTrust", "Google"]
+    articlesToComb = ["Stomach", "HIV", "Apple", "Google", "Toyota", "Disney", "Flower"]
     for article in articlesToComb:
-        do(article, 0, 1)
+        do(article)
 
-def do(title, a, b):
-    print("Doing " + title + " -- VER " + str(a) + " vs. " + str(b))
-    rev_list = w.get_revision_ids(title, 5) # no change
+def do(title):
+    print("Doing " + title + "...")
 
-    ver_a = rev_list[a]
-    ver_b = rev_list[b]
+    # Grab n revisions
+    rev_list = w.get_revision_ids(title, TRUST_REVISION_COUNT)
 
-    rev_a = w.get_revision_text(ver_a)
-    rev_b = w.get_revision_text(ver_b)
+    print("revs: " + str(rev_list))
 
-    articleToWrite = {u"title": str(title), u"text": rev_a, u"diff": ""}
-    f.writeArticle(str(ver_a), articleToWrite)
+    text_list = []
+    auth_list = []
+    for rev_id in rev_list:
+        auth_list.append(r.randrange(90,100))
+        text_list.append(w.get_revision_text(rev_id))
 
-    # Compute diff
-    diff = DiffEngine.compute_edit_list(rev_a, rev_b)
+    print("Got " + str(len(text_list))+ " texts...")
 
-    # Compute rep from diff
-    parsed_diff = ReputationEngine.parseArray(str(diff))
-    rep = ReputationEngine.assignTrust(parsed_diff)
+    rep_arr, moves, insertions, deletes = re.getRepArray(text_list, 1, auth_list)
+    trust = re.getFinalTrust(rep_arr)
+    print("trust " + str(trust))
 
-    print("Reputation: " + str(rep))
+    print("Putting to db")
+    print(trust)
 
     # Store data in db
-    id = str(rev_list[0]) + '.' + str(rev_list[1])
-    data = {u"diff_moves": str(diff), u"diff_trust": [1, 2, 3, 4], u"trust": rep}
-    f.writeDiff(id, data)
+    data = { 
+        u"overall_trust": float(trust),
+        u"author_trust": float(trust),
+        u"moves": int(moves),
+        u"insertions": int(insertions),
+        u"deletes": int(deletes)
+    }
 
-    # make sure it stored
-    print(f.readDiff(id))
+    #print(data)
+    f.writeData(title, data)
 
-
+    # # make sure it stored
+    print(f.readData(title))
 
 start()
