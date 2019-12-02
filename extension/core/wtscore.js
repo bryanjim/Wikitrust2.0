@@ -8,7 +8,15 @@ window.onload = function(){
 
 // Preloads ui w/ fake data
 let loadDummyScores = () => {
-    updateUI(0, 0, 0, 0, 0);
+    let props = {
+        'overall_trust': 0.00,
+        'author_trust': 0.00,
+        'moves':  0,
+        'insertions': 0,
+        'deletes': 0,
+        'time': 'Jan 1st 1970 12:00:00'
+    }
+    updateUI(props);
 }
 
 // Fetches data then updates ui
