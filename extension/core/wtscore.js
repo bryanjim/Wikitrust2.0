@@ -1,40 +1,38 @@
 const ENDPOINT_URL = 'https://firestore.googleapis.com/v1/projects/wikitrustapp/databases/(default)/documents/articles/'
 
-let colorPercentage = (percentage) => {
-    let r, g, b = 0;
-    if (percentage < 50) {
-        r = 225;
-        g = Math.round(5.1 * percentage);
-    } else {
-        g = 225;
-        r = Math.round(510 - 5.1 * percentage);
-    }
-    // converts rgb to hex
-    let hex = r * 0x10000 + g * 0x100 + b * 0x1;
-    return '#' + ('000000' + hex.toString(16)).slice(-6);
-}
-
 // Entry point of app
 window.onload = function(){
     loadDummyScores();
-    loadRealScores("837852180");
+    loadRealScores("HIV");
 }
 
 // Preloads ui w/ fake data
-let loadDummyScores = () => {updateUI("Loading...", "Loading...", colorPercentage(0));}
+let loadDummyScores = () => {
+    updateUI(0, 0, 0, 0, 0);
+}
 
 // Fetches data then updates ui
 let loadRealScores = (page) => {
     dataPromise(page)
         .then((res) => {
-            let trust = 96;
-            let author = 96;
-            let color = colorPercentage(trust)
-            updateUI(trust, author, color);
-            updateDebug(res);
+
+            let props = {
+                'overall_trust': getDoubleField(res, "overall_trust"),
+                'author_trust': getDoubleField(res, "author_trust"),
+                'moves':  getIntField(res, "moves"),
+                'insertions': getIntField(res, "insertions"),
+                'deletes': getIntField(res, "deletes"),
+                'time': getTimestamp(res)
+            }
+
+            updateUI(props);
+            updateDebug(props);
         });
 }
 
+let getTimestamp = (res) => {return res['updateTime'] || '!2:00am Jan 1st'}
+let getIntField = (res, id) => {return res['fields'][id]['integerValue'] || 0}
+let getDoubleField = (res, id) => {return res['fields'][id]['doubleValue'] || 0.00}
 
 // Just for debugging so we can see the output
 let updateDebug = (res) => {
@@ -42,8 +40,15 @@ let updateDebug = (res) => {
 }
 
 // Updates the UI
-// Call updateUI(trust, author, color) with values
-let updateUI = (trust, author, color) => {
+// Call updateUI(trust, author, moves, ins, dele) with values
+let updateUI = (props) => {
+
+    let trust = props['overall_trust'];
+    let author = props['author_trust'];
+    let moves = props['moves'];
+    let insertions = props['insertions'];
+    let deletes = props['deletes'];
+    let time = props['time'];
 
     // Change trust
     let value = $('#trust-value')
@@ -53,9 +58,10 @@ let updateUI = (trust, author, color) => {
     let left = $('.progress-left .progress-bar')
     let right = $('.progress-right .progress-bar')
 
-    left.css("border-color", color);
-    right.css("border-color", color);
+    let hexColor = getColorHex(trust)
 
+    left.css("border-color", hexColor);
+    right.css("border-color", hexColor);
 
     if(trust > 0){
         if(trust <= 50){
@@ -69,6 +75,21 @@ let updateUI = (trust, author, color) => {
 
 // Transform to deg
 let percentageToDegrees = (percent) => {return percent / 100 * 360};
+
+// gets hexcode
+let getColorHex = (percentage) => {
+    let r, g, b = 0;
+    if (percentage < 50) {
+        r = 225;
+        g = Math.round(5.1 * percentage);
+    } else {
+        g = 225;
+        r = Math.round(510 - 5.1 * percentage);
+    }
+    // converts rgb to hex
+    let hex = r * 0x10000 + g * 0x100 + b * 0x1;
+    return '#' + ('000000' + hex.toString(16)).slice(-6);
+}
 
 // Promise for data
 // dataPromise.then(data => use(data))

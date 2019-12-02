@@ -13,12 +13,12 @@
   
     "permissions": ["http://*.wikipedia.org/wiki/*", "https://*.wikipedia.org/wiki/*"],
   
-    "web_accessible_resources": ["core/wtscore.js", "core/wtstyle.css", "core/wtpopup.html", "core/require.js"],
+    "web_accessible_resources": ["core/wtscore.js", "core/wtstyle.css", "core/wtpopup.html"],
 
     "content_scripts": [
       {
         "matches": ["http://*.wikipedia.org/wiki/*", "https://*.wikipedia.org/wiki/*", "https://cdnjs.cloudflare.com/*"],
-        "js": ["core/wtscore.js", "core/require.js"],
+        "js": ["core/wtscore.js"],
         "run_at": "document_idle",
         "all_frames": false
       }
