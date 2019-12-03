@@ -1,0 +1,34 @@
+{
+    "manifest_version": 2,
+    "name": "WikiTrust",
+    "version": "0.1",
+    "author": "WikiTrust",
+    "description": "Adds a button to Wikipedia articles to show WikiTrust Highlighting.",
+    "homepage_url": "https://sites.google.com/view/wikitrust2",
+  
+    "icons": {
+      "32": "icons/icon32.png",
+      "64": "icons/icon64.png"
+    },
+  
+    "permissions": ["http://*.wikipedia.org/wiki/*", "https://*.wikipedia.org/wiki/*", "tabs"],
+  
+    "web_accessible_resources": ["core/wtscore.js", "core/wtstyle.css", "core/wtpopup.html", "core/background.js"],
+    "background": {
+      "scripts": [
+          "core/background.js"
+      ]
+  },
+    "content_scripts": [
+      {
+        "matches": ["http://*.wikipedia.org/wiki/*", "https://*.wikipedia.org/wiki/*", "https://cdnjs.cloudflare.com/*"],
+        "js": ["core/wtscore.js"],
+        "run_at": "document_idle",
+        "all_frames": false
+      }
+    ],
+    "browser_action":{
+        "default_popup": "core/wtpopup.html",
+        "default_title": "A pop-up displays trust score"
+    }
+  }
