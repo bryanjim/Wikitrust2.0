@@ -1,9 +1,15 @@
 const ENDPOINT_URL = 'https://firestore.googleapis.com/v1/projects/wikitrustapp/databases/(default)/documents/articles/'
+const pages = ["Stomach","HIV","Apple","Google","Toyota","Disney", "Flower","The Art of War","Code of Hammurabi","Euclid's Elements","Eugene Onegin","Hamlet","Republic","The Prince","One Thousand and One Nights","Dream of the Red Chamber","Don Quixote","The Lord of the Rings","The Tale of Genji","Epic of Gilgamesh","Iliad","Journey to the West","Odyssey","Parzival","Romance of the Three Kingdoms","Water Margin","Dead Sea Scrolls","Encyclopædia Britannica","On the Origin of Species","Oxford English Dictionary","Gulliver's Travels","King Lear","Macbeth","A Midsummer Night's Dream","Romeo and Juliet","Alice's Adventures in Wonderland","The Brothers Karamazov","The Catcher in the Rye"]
 
-// Entry point of app
+// Ensure window is loaded
 window.onload = function(){
     loadDummyScores();
-    loadRealScores("HIV");
+    app()
+}
+
+//Entrypoint of app
+let app = () => {
+    loadRealScores(getTitle(pages));
 }
 
 
@@ -149,4 +155,9 @@ let getDisplayDate = (date) => {
     } else{
        return "30+ days ago"
     }
+}
+
+let getTitle = (titles) => {
+    let index = Math.floor(Math.random()*titles.length)
+    return titles[index]
 }
