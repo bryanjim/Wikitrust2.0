@@ -60,7 +60,11 @@ let updateUI = (props) => {
 
     // Change trust
     let value = $('#trust-value')
-    value.html(trust);
+    let date = getDisplayDate(time);
+
+    value.html(Math.floor(trust));
+    $('#author-value').html(author);
+    $('#date-posted').html(date);
 
     // Change color
     let left = $('.progress-left .progress-bar')
@@ -91,7 +95,7 @@ let getColorHex = (percentage) => {
         r = 225;
         g = Math.round(5.1 * percentage);
     } else {
-        g = 225;
+        g = 195;
         r = Math.round(510 - 5.1 * percentage);
     }
     // converts rgb to hex
@@ -114,4 +118,27 @@ let dataPromise = (page) => {
 
 let requestCrawlPromise = (page) => {
     
+}
+
+let getDisplayDate = (date) => {
+    today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0);
+    compDate = new Date(date);
+    
+    // Gets the difference between today and the date
+    diff = today.getTime() - compDate.getTime(); 
+    // 24 * 60 * 60 * 1000 represents a day in seconds
+    if (compDate.getTime() == today.getTime()) {
+        return "Today";
+    } else if (diff <= (24 * 60 * 60 *1000)) {
+        return "Yesterday";
+    } else if (diff <= (29 * 24 * 60 * 60 *1000)) { 
+        let days = diff / (24 * 60 * 60 *1000);
+        return Math.floor(days) + " days ago"
+    } else{
+       return "30+ days ago"
+    }
 }
