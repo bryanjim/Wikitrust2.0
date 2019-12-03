@@ -1,28 +1,36 @@
 from Firestore import Firestore
+import random as r
 
 # Create object
 f = Firestore()
 
-id_a = "aaaa"
-id_b = "bbbb"
+def genRandData(obj):
+    return {
+        u'author_trust': round(r.uniform(0.0, 100.0),2),
+        u'deletes': r.randrange(0,100),
+        u'insertions': r.randrange(0,100),
+        u'moves': r.randrange(0,100),
+        u'overall_trust': round(r.uniform(0.0, 100.0),2)
+    }
 
-data_a = {
-    u"diff_moves": ["(A,B,C,D)", "(E,F,G,H)"],
-    u"diff_trust": [11, 22],
-    u"trust": 1,
-}
+def writeTest(id, data):
+    # print("Writing to " + str(id) + "...")
+    f.writeData(id, data)
 
-data_b = {
-    u"diff_moves": ["(I,J,K,L)", "(M,N,O,P)"],
-    u"diff_trust": [88, 99],
-    u"trust": 99,
-}
+def readTest(id):
+    # print("Reading from " + str(id) + "...")
+    print(f.readData(id))
 
-print("Writing diff a...")
-f.writeDiff(id_a, data_a)
-print("Writing diff b...")
-f.writeDiff(id_b, data_b)
+def deleteTest(id):
+    # print("Deleting " + str(id) + "...")
+    f.deleteData(id)
 
-print(f.readDiff(id_a))
-print(f.readDiff(id_b))
-
+if __name__ == "__main__":
+    for i in range(0,5):
+        id = r.randrange(11111,99999)
+        obj = {}
+        writeTest(str(id), genRandData(obj))
+        readTest(str(id))
+        deleteTest(str(id))
+        print("Test #" + str(i) + ": PASSED")
+    print("All tests PASSED")
