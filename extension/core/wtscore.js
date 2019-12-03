@@ -6,6 +6,7 @@ window.onload = function(){
     loadRealScores("HIV");
 }
 
+
 // Preloads ui w/ fake data
 let loadDummyScores = () => {
     let props = {
@@ -34,7 +35,7 @@ let loadRealScores = (page) => {
             }
 
             updateUI(props);
-            updateDebug(props);
+            //updateDebug(props);
         });
 }
 
@@ -43,9 +44,16 @@ let getIntField = (res, id) => {return res['fields'][id]['integerValue'] || 0}
 let getDoubleField = (res, id) => {return res['fields'][id]['doubleValue'] || 0.00}
 
 // Just for debugging so we can see the output
+
 let updateDebug = (res) => {
     this.document.getElementById('debug').innerHTML = JSON.stringify(res);
 }
+
+chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT},
+   function(tabs){
+      updateDebug(tabs[0].url);
+   }
+);
 
 // Updates the UI
 // Call updateUI(trust, author, moves, ins, dele) with values

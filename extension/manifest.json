@@ -11,10 +11,14 @@
       "64": "icons/icon64.png"
     },
   
-    "permissions": ["http://*.wikipedia.org/wiki/*", "https://*.wikipedia.org/wiki/*"],
+    "permissions": ["http://*.wikipedia.org/wiki/*", "https://*.wikipedia.org/wiki/*", "tabs"],
   
-    "web_accessible_resources": ["core/wtscore.js", "core/wtstyle.css", "core/wtpopup.html"],
-
+    "web_accessible_resources": ["core/wtscore.js", "core/wtstyle.css", "core/wtpopup.html", "core/background.js"],
+    "background": {
+      "scripts": [
+          "core/background.js"
+      ]
+  },
     "content_scripts": [
       {
         "matches": ["http://*.wikipedia.org/wiki/*", "https://*.wikipedia.org/wiki/*", "https://cdnjs.cloudflare.com/*"],
