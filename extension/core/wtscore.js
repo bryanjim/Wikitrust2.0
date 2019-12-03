@@ -8,8 +8,25 @@ window.onload = function(){
 }
 
 //Entrypoint of app
-let app = () => {
-    loadRealScores(getTitle(pages));
+let app = (page) => {
+    loadRealScores(page);
+}
+
+// Listen for the url
+chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT},
+   (tabs) => {
+       let url = tabs[0].url;
+       let page = parseURL(url)
+       //updateDebug(page);
+       app(page)
+    }
+);
+
+// Return page from the url
+let parseURL = (url) => {
+    let page = url.substring(30)
+    let page_spaced = page.replace(/_/g, " ")
+    return page_spaced
 }
 
 
@@ -54,12 +71,6 @@ let getDoubleField = (res, id) => {return res['fields'][id]['doubleValue'] || 0.
 let updateDebug = (res) => {
     this.document.getElementById('debug').innerHTML = JSON.stringify(res);
 }
-
-chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT},
-   function(tabs){
-      updateDebug(tabs[0].url);
-   }
-);
 
 // Updates the UI
 // Call updateUI(trust, author, moves, ins, dele) with values
@@ -155,9 +166,4 @@ let getDisplayDate = (date) => {
     } else{
        return "30+ days ago"
     }
-}
-
-let getTitle = (titles) => {
-    let index = Math.floor(Math.random()*titles.length)
-    return titles[index]
 }
