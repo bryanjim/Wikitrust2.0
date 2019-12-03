@@ -529,5 +529,4 @@ class TestDiffsTichy(unittest.TestCase):
         self.assertCountEqual([(0, 0, 0, 4), (2, 4, 4, 10), (0, 14, 4, 4)], [x] + w + [y])
 
 if __name__ == '__main__':
-    from matplotlib import pyplot as plt
     unittest.main()

@@ -22,4 +22,7 @@ backend-setup:
 	pip install -r requirements.txt --no-index
 backend-test:
 	python wikitrustbackend\FirestoreTester.py
+	python wikitrustbackend\chdiff.py
+	python wikitrustbackend\DiffEngine.py
+	python wikitrustbackend\ReputationEngine.py
 backend:

@@ -265,17 +265,17 @@ if __name__ == '__main__':
 
     sentenceArray = []
 
-    trustArray = getRepArray(test_strings) 
+    trustArray, moves, insertions, deletes = getRepArray(test_strings, 1, authorRepArr) 
     print(trustArray)
     print("")
     print("")
     print("TESTING getOverallTrust & getFinalTrust")
     #print("Version 1 trust: ", getOverallTrust(0))
-    print("Version 1 trust: ", getOverallTrust(1))
-    print("Version 2 trust: ", getOverallTrust(2))
-    print("Version 3 trust: ", getOverallTrust(3))
-    print("Version 4 trust: ", getOverallTrust(4))
-    print ("Final Trust: ", getFinalTrust())
+    print("Version 1 trust: ", getOverallTrust(1, trustArray))
+    print("Version 2 trust: ", getOverallTrust(2, trustArray))
+    print("Version 3 trust: ", getOverallTrust(3, trustArray))
+    print("Version 4 trust: ", getOverallTrust(4, trustArray))
+    print ("Final Trust: ", getFinalTrust(trustArray))
     print("")
     print("")
     print("TESTING getTrustValues & getFinalTrustValues")

@@ -677,9 +677,7 @@ class TestDiffsTichy(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    from matplotlib import pyplot as plt
-
-    # unittest.main()
+    unittest.main()
 
 
 # ############################################################### - Cagan Bakirci
