@@ -59,10 +59,17 @@ let loadRealScores = (page) => {
 
             updateUI(props);
             //updateDebug(props);
-        });
+        }
+        // promise was rejected
+        // (error) => {
+        //     updateDebug("Page not crawled")
+        // }
+
+        
+        );
 }
 
-let getTimestamp = (res) => {return res['updateTime'] || '!2:00am Jan 1st'}
+let getTimestamp = (res) => {return res['updateTime'] || '12:00am Jan 1st'}
 let getIntField = (res, id) => {return res['fields'][id]['integerValue'] || 0}
 let getDoubleField = (res, id) => {return res['fields'][id]['doubleValue'] || 0.00}
 

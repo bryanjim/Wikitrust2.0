@@ -1,10 +1,9 @@
 {
     "manifest_version": 2,
     "name": "WikiTrust",
-    "version": "0.1",
+    "version": "1.0",
     "author": "WikiTrust",
-    "description": "Adds a button to Wikipedia articles to show WikiTrust Highlighting.",
-    "homepage_url": "https://sites.google.com/view/wikitrust2",
+    "description": "Adds a button to get reputation of a page",
   
     "icons": {
       "32": "icons/icon32.png",
