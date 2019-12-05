@@ -1,3 +1,11 @@
+# This file contains the code for the runner of the WikiTrust
+# algorithm. This file connects all the individual parts
+# in the project.
+#
+# Joseph Csoti, November 2019
+# Cagan Bakirci, November 2019
+
+
 from Firestore import Firestore
 from WikiEngine import WikiEngine
 import ReputationEngine as re

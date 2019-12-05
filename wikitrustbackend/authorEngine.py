@@ -1,3 +1,12 @@
+# This file contains the code for the manipulation of the 
+# author_reputation algorithm. The main function is getAuthorReputation,
+# which takes the array of versions as input, computes the author
+# reputation for each version in the array, and stores them in an array.
+# The explanation of other functions can be found on top of the functions.
+#
+# Cagan Bakirci, November 2019
+
+
 from author_reputation.article import Article
 from author_reputation.version import Version
 from author_reputation.author import Author
@@ -11,14 +20,29 @@ repArray = []
 test_article = []
 test_versions = []
 
+
+
+#################################################################
+#
+# Create Reputation Array
+#
+# The function initilizes the repArray
+# 
 def createRepArray(myArray = []):
     for i in range(len(myArray)):
         repArray.append(Author(i, 0))
 
 
-def getAuthorReputation(arr = [[]]):
-    # print(path)
 
+#################################################################
+#
+# get Author Reputation
+#
+# The function takes an array of versions as input, computes
+# the author reputation for each version in the array, and
+# stores them in an array.
+# 
+def getAuthorReputation(arr = [[]]):
     path.append(dir(path[0]))
 
     max_judgement_dist = 2
@@ -35,92 +59,80 @@ def getAuthorReputation(arr = [[]]):
         for version_iter, version in enumerate(test_versions):
             test_article.add_new_version(version)
 
-def getARepVal(i):
+
+
+#################################################################
+#
+# get Author and Reputation
+#
+# The function returns the author and the reputation value for
+# the ith version of the article.
+# 
+def getAuthorAndRep(i):
     return (repArray[i])
 
-def getFinalAuthor():
+
+
+#################################################################
+#
+# get Final Author and Reputation
+#
+# The function returns the author and the reputation value for
+# the final version of the article.
+# 
+def getFinalAuthorAndRep():
     return(repArray[len(repArray) - 1])
 
+
+
+#################################################################
+#
+# get Reputation Value
+#
+# The function returns the reputation value for the author
+# of the ith version of the article as a float value.
+# 
 def getRepVal(i):
     return(repArray[i].reputation)
 
+
+
+#################################################################
+#
+# get Final Reputation Value
+#
+# The function returns the reputation value for the author
+# of the final version of the article as a float value.
+# 
 def getFinalRepVal():
     return (repArray[len(repArray) - 1].reputation)
 
+
+
+#The Main Function with some test cases.
 if __name__ == '__main__':
     test_strings = []
+    #Some cases for testing
     test_strings.append("the quick brown fox jumps over the lazy dog")
     test_strings.append("foo the quick brown fox jumps over the lazy dog bar")
     test_strings.append("the quick brown fox jumps over the lazy dog")
     test_strings.append("the lazy fox jumps over the quick brown dog")
     test_strings.append("the lazy fox jumps over the quick brown dog and also other stuff")
 
-    #print("---Printing repArray (before)---")
-    #print(repArray)
+    #Creare the Array
     createRepArray(test_strings)
-    #print("---Printing repArray (after)---")
-    #print(*repArray)
-
-    # max_judgement_dist = 2
-    # scaling_constant = 1
-    # scaling_function = lambda x: math.log(1.1 + x)
-
-    # test_article = Article(max_judgement_dist, scaling_constant, scaling_function)
-
-    #print("///////////////////////////////")
-    #dumyArr = getAuthorReputation(repArray)
+    #call getAuthorReputation to compute the resulting reputation array
     getAuthorReputation(repArray)
-    # print(*dumyArr)
 
-
+    # TEST
     print("---Printing repArray (final)---")
     print(*repArray)
-    for author in repArray:
-        print(str(author))
-    print()
 
     print("Author 3")
-    print(getARepVal(3))
+    print(getAuthorAndRep(3))
     print(getRepVal(3))
 
     print("---Printing repArray (Final Author)---")
-    print(getFinalAuthor())
+    print(getFinalAuthorAndRep())
     print(getFinalRepVal())
 
-    # print("-------------------------")
-    # print("-------------------------")
-    # print("-------------------------")
-    # print("Print test_versions")
-    # print(*test_versions)
-    # print(" ")
-    # print("Print text_article")
-    # print(test_article)
-
-    # max_judgement_dist = 2
-    # scaling_constant = 1
-    # scaling_function = lambda x: math.log(1.1 + x)
-
-    # test_article = Article(max_judgement_dist, scaling_constant, scaling_function)
-
-    # for x in range(3):
-    #     for version_iter, version in enumerate(test_versions):
-    #         print("Loop %d:\n" % version_iter)
-
-    #         print("Author Status:")
-    #         for author in test_authors:
-    #             print(str(author))
-    #         print()
-
-    #         print("Adding Version...")
-    #         print(str(version))
-    #         test_article.add_new_version(version)
-
-
-
-
-# Author Status:
-# Author ID: 0    Reputation:-1.954446438117569
-# Author ID: 1    Reputation:-0.9109152895432457
-# Author ID: 2    Reputation:0.8892259506657838
-# Author ID: 3    Reputation:0.003016763046310933
-# Author ID: 4    Reputation:-0.46862714935921274
