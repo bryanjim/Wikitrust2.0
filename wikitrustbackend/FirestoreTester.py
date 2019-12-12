@@ -4,7 +4,7 @@ import random as r
 # Create object
 f = Firestore()
 
-def genRandData(obj):
+def genRandData():
     return {
         u'author_trust': round(r.uniform(0.0, 100.0),2),
         u'deletes': r.randrange(0,100),
@@ -14,23 +14,44 @@ def genRandData(obj):
     }
 
 def writeTest(id, data):
-    # print("Writing to " + str(id) + "...")
     f.writeData(id, data)
+    return f.readData(id) == data
 
-def readTest(id):
-    # print("Reading from " + str(id) + "...")
-    print(f.readData(id))
+def readTest(id, data):
+    return f.readData(id) == data
 
 def deleteTest(id):
-    # print("Deleting " + str(id) + "...")
     f.deleteData(id)
+    return True
 
 if __name__ == "__main__":
-    for i in range(0,5):
+    teststorun = 25
+    testspassed = 0
+    wfail = 0
+    rfail = 0
+    dfail = 0
+    for i in range(0,teststorun):
+
         id = r.randrange(11111,99999)
-        obj = {}
-        writeTest(str(id), genRandData(obj))
-        readTest(str(id))
-        deleteTest(str(id))
-        print("Test #" + str(i) + ": PASSED")
-    print("All tests PASSED")
+        obj = genRandData()
+
+        wtest = writeTest(str(id), obj)
+        rtest = readTest(str(id), obj)
+        dtest = deleteTest(str(id))
+
+
+        passedAll = writeTest and rtest and dtest
+
+        if passedAll: testspassed += 1
+
+        if not wtest: wfail +=1
+        if not rtest: rfail +=1
+        if not dtest: dfail +=1
+
+        msg = "PASSED" if passedAll else "FAILED"
+        print("Test #" + str(i) + ": " + msg)
+
+    print("All tests done -- " + str(testspassed) + "/" + str(teststorun) + " PASSED")
+    print(str(wfail) + " write failures")
+    print(str(rfail) + " read failures")
+    print(str(dfail) + " delete failures")

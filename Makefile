@@ -25,5 +25,5 @@ backend-test:
 	python wikitrustbackend\chdiff.py
 	python wikitrustbackend\DiffEngine.py
 	python wikitrustbackend\ReputationEngine.py
-	pyhton wikitrustbackend\authorEngine.py
+	python wikitrustbackend\WikiEngineTest.py
 backend:

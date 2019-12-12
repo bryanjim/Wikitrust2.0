@@ -9,6 +9,7 @@
 from Firestore import Firestore
 from WikiEngine import WikiEngine
 import ReputationEngine as re
+import authorEngine as ae
 import random as r
 
 TRUST_REVISION_COUNT = 75
@@ -17,6 +18,7 @@ f = Firestore()
 w = WikiEngine()
 
 def start():
+    # what articles to crawl
     articlesToComb = [
         "Stomach", 
         "HIV", 
@@ -63,19 +65,23 @@ def start():
 def do(title):
     print("Doing " + title + "...")
 
-    # Grab n revisions
+    # Grab n revision ids
     rev_list = w.get_revision_ids(title, TRUST_REVISION_COUNT)
 
     print("revs: " + str(rev_list))
 
     text_list = []
     auth_list = []
+    # grab texts
     for rev_id in rev_list:
         auth_list.append(r.randrange(90,100))
         text_list.append(w.get_revision_text(rev_id))
 
+    print("xxxx", auth_list)
+
     print("Got " + str(len(text_list))+ " texts...")
 
+    # get rep + edit numbers
     rep_arr, moves, insertions, deletes = re.getRepArray(text_list, 1, auth_list)
     trust = re.getFinalTrust(rep_arr)
     print("trust " + str(trust))
@@ -92,10 +98,10 @@ def do(title):
         u"deletes": int(deletes)
     }
 
-    #print(data)
+    # Write to db
     f.writeData(title, data)
 
-    # # make sure it stored
+    # Read from db
     print(f.readData(title))
 
 start()
