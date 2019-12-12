@@ -12,9 +12,9 @@ web-build:
 	npm run build
 
 # EXTENSION
-ext-setup:
-ext-test:
-ext:
+ext-build:
+	cd C:\Program Files (x86)\Google\Chrome\Application && \
+	chrome.exe --pack-extension=C:\Users\Joe\Classes\CSE115a\extension --pack-extension-key=C:\Users\Joe\Classes\CSE115a\extension.pem --no-message-box
 
 # BACKEND
 backend-setup:
